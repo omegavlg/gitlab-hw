@@ -25,6 +25,7 @@
 ### Задание 1
 
 Настройка pipllene:
+
 Код:
 ```
 /usr/local/go/bin/go test .
@@ -157,6 +158,7 @@ Finished: SUCCESS
 
 ### Задание 2
 Настройка pipllene:
+
 Код:
 ```
  pipeline {
@@ -309,6 +311,7 @@ Finished: SUCCESS
 
 ### Задание 3
 Настройка pipllene:
+
 Код:
 ```
 pipeline {
