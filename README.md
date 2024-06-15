@@ -247,33 +247,133 @@ Removing login credentials for https://index.docker.io/v1/
 [Pipeline] End of Pipeline
 Finished: SUCCESS```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
-
+<img src = "img/nx1.png" width = 100%>
 
 ---
 
 ### Задание 3
+Настройка pipllene
+<img src = "img/jk3.png" width = 100%>
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+Результат выполнения сборки:
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+Started by user admin adminov
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/test_pipeline2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/test_pipeline2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/omegavlg/sdvps-materials.git # timeout=10
+Fetching upstream changes from https://github.com/omegavlg/sdvps-materials.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/omegavlg/sdvps-materials.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 223dbc3f489784448004e020f2ef224f17a7b06d (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 223dbc3f489784448004e020f2ef224f17a7b06d # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 223dbc3f489784448004e020f2ef224f17a7b06d # timeout=10
+Commit message: "Update README.md"
+ > git rev-list --no-walk 223dbc3f489784448004e020f2ef224f17a7b06d # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Check Environment)
+[Pipeline] sh
++ env
+RUN_DISPLAY_URL=http://192.168.1.121:8080/job/test_pipeline2/3/display/redirect
+JENKINS_URL=http://192.168.1.121:8080/
+EXECUTOR_NUMBER=0
+_=/usr/bin/env
+LANG=en_US.UTF-8
+BUILD_ID=3
+RUN_CHANGES_DISPLAY_URL=http://192.168.1.121:8080/job/test_pipeline2/3/display/redirect?page=changes
+INVOCATION_ID=28a645fdf5be4f2e96b5cb2127f69931
+JENKINS_NODE_COOKIE=1c389413-bf9a-4701-a8dc-8ea84576f7fd
+JOB_BASE_NAME=test_pipeline2
+WORKSPACE_TMP=/var/lib/jenkins/workspace/test_pipeline2@tmp
+NOTIFY_SOCKET=/run/systemd/notify
+CI=true
+HUDSON_COOKIE=a61787c2-0a6b-4d86-8cb7-5c26c8cd4e40
+USER=jenkins
+BUILD_NUMBER=3
+WORKSPACE=/var/lib/jenkins/workspace/test_pipeline2
+PWD=/var/lib/jenkins/workspace/test_pipeline2
+HUDSON_URL=http://192.168.1.121:8080/
+HOME=/var/lib/jenkins
+NODE_NAME=built-in
+JOURNAL_STREAM=9:60167
+HUDSON_SERVER_COOKIE=40f9c603f232503c
+JENKINS_HOME=/var/lib/jenkins
+JOB_NAME=test_pipeline2
+RUN_TESTS_DISPLAY_URL=http://192.168.1.121:8080/job/test_pipeline2/3/display/redirect?page=tests
+HUDSON_HOME=/var/lib/jenkins
+JOB_DISPLAY_URL=http://192.168.1.121:8080/job/test_pipeline2/display/redirect
+RUN_ARTIFACTS_DISPLAY_URL=http://192.168.1.121:8080/job/test_pipeline2/3/display/redirect?page=artifacts
+BUILD_URL=http://192.168.1.121:8080/job/test_pipeline2/3/
+SHELL=/bin/bash
+STAGE_NAME=Check Environment
+JOB_URL=http://192.168.1.121:8080/job/test_pipeline2/
+BUILD_DISPLAY_NAME=#3
+SHLVL=2
+BUILD_TAG=jenkins-test_pipeline2-3
+NODE_LABELS=built-in
+LOGNAME=jenkins
+PATH=/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+JENKINS_SERVER_COOKIE=durable-773f97248c4dc763bf557bb6906ec11c0db49afa937479f0b082915636524302
+[Pipeline] sh
++ which go
+/usr/local/go/bin/go
+[Pipeline] sh
++ which docker
+/usr/bin/docker
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ go version
+go version go1.22.3 linux/amd64
+[Pipeline] sh
++ go test .
+ok  	github.com/netology-code/sdvps-materials	(cached)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ CGO_ENABLED=0
++ GOOS=linux
++ go build -a -installsuffix nocgo -o app .
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Upload to Nexus)
+[Pipeline] sh
++ curl -u admin:admin --upload-file ./app http://192.168.1.89:8081/repository/netology/app
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1964k    0     0  100 1964k      0  2989k --:--:-- --:--:-- --:--:-- 3008k
+100 1964k    0     0  100 1964k      0  2989k --:--:-- --:--:-- --:--:-- 3008k
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+<img src = "img/nx2.png" width = 100%>
+
 
 ### Задание 4
 
