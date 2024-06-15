@@ -25,6 +25,35 @@
 ### Задание 1
 
 Настройка pipllene:
+Код:
+```
+/usr/local/go/bin/go test .
+if [ $? -ne 0 ]; then
+  echo "Go tests failed"
+  exit 1
+fi
+
+docker build . -t ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER
+if [ $? -ne 0 ]; then
+  echo "Docker build failed"
+  exit 1
+fi
+
+docker login ubuntu-bionic:8082 -u admin -p admin
+if [ $? -ne 0 ]; then
+  echo "Docker login failed"
+  exit 1
+fi
+
+docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER
+if [ $? -ne 0 ]; then
+  echo "Docker push failed"
+  exit 1
+fi
+
+docker logout
+```
+Скрин:
 <img src = "img/jk1.png" width = 100%>
 
 Результат выполнения сборки:
@@ -128,6 +157,32 @@ Finished: SUCCESS
 
 ### Задание 2
 Настройка pipllene:
+Код:
+```
+ pipeline {
+ agent any
+ stages {
+  stage('Git') {
+   steps {git 'https://github.com/omegavlg/sdvps-materials.git/'}
+  }
+  stage('Test') {
+   steps {
+    sh 'go test .'
+   }
+  }
+  stage('Build') {
+   steps {
+    sh 'docker build . -t ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER'
+   }
+  }
+  stage('Push') {
+   steps {
+    sh 'docker login ubuntu-bionic:8082 -u admin -p admin && docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER && docker logout'   }
+  }
+ }
+}
+```
+Скрин:
 <img src = "img/jk2.png" width = 100%>
 
 Результат выполнения сборки:
@@ -254,6 +309,46 @@ Finished: SUCCESS
 
 ### Задание 3
 Настройка pipllene:
+Код:
+```
+pipeline {
+    agent any
+    stages {
+        stage('Git') {
+            steps {
+                git branch: 'main', url: 'https://github.com/omegavlg/sdvps-materials.git'
+            }
+        }
+        stage('Check Environment') {
+            steps {
+                sh 'env'
+                sh 'which go'
+                sh 'which docker'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'go version'
+                sh 'go test .'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o app .'
+            }
+        }
+        stage('Upload to Nexus') {
+            steps {
+                sh '''
+                curl -u admin:admin --upload-file ./app \
+                http://192.168.1.89:8081/repository/netology/app
+                '''
+            }
+        }
+    }
+}
+```
+Скрин:
 <img src = "img/jk3.png" width = 100%>
 
 Результат выполнения сборки:
@@ -373,5 +468,4 @@ ok  	github.com/netology-code/sdvps-materials	(cached)
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
-
 <img src = "img/nx2.png" width = 100%>
