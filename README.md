@@ -24,10 +24,10 @@
 
 ### Задание 1
 
-Настройка pipllene
+Настройка pipllene:
 <img src = "img/jk1.png" width = 100%>
 
-Пкзультат выполнения сборки
+Результат выполнения сборки:
 ```
 Started by user admin adminov
 Running as SYSTEM
@@ -130,13 +130,122 @@ Finished: SUCCESS
 Настройка pipllene
 <img src = "img/jk2.png" width = 100%>
 
+Результат выполнения сборки:
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+Started by user admin adminov
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/test_pipeline1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/test_pipeline1/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/omegavlg/sdvps-materials.git/ # timeout=10
+Fetching upstream changes from https://github.com/omegavlg/sdvps-materials.git/
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/omegavlg/sdvps-materials.git/ +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision da5acf7bcb7f437637adf06fbd03a24dc2c8f13e (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f da5acf7bcb7f437637adf06fbd03a24dc2c8f13e # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master da5acf7bcb7f437637adf06fbd03a24dc2c8f13e # timeout=10
+Commit message: "branch main, add creds for vagrant box"
+ > git rev-list --no-walk da5acf7bcb7f437637adf06fbd03a24dc2c8f13e # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ go test .
+ok  	github.com/netology-code/sdvps-materials	(cached)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ docker build . -t ubuntu-bionic:8082/hello-world:v12
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 403B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/golang:1.16
+#2 DONE 0.6s
+
+#3 [internal] load metadata for docker.io/library/alpine:latest
+#3 DONE 0.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [builder 1/4] FROM docker.io/library/golang:1.16@sha256:5f6a4662de3efc6d6bb812d02e9de3d8698eea16b8eb7281f03e6f3e8383018e
+#5 DONE 0.0s
+
+#6 [stage-1 1/3] FROM docker.io/library/alpine:latest@sha256:77726ef6b57ddf65bb551896826ec38bc3e53f75cdde31354fbffb4f25238ebd
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 30.43kB 0.0s done
+#7 DONE 0.1s
+
+#8 [builder 2/4] WORKDIR /go/src/github.com/netology-code/sdvps-materials
+#8 CACHED
+
+#9 [builder 3/4] COPY . ./
+#9 DONE 0.1s
+
+#10 [builder 4/4] RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /app .
+#10 DONE 13.3s
+
+#11 [stage-1 2/3] RUN apk -U add ca-certificates
+#11 CACHED
+
+#12 [stage-1 3/3] COPY --from=builder /app /app
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:5a31265584bb5fcc37cd29447134217a8ef81f433d2fc93fa2b130f9edd9bae8 done
+#13 naming to ubuntu-bionic:8082/hello-world:v12 0.0s done
+#13 DONE 0.0s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push)
+[Pipeline] sh
++ docker login ubuntu-bionic:8082 -u admin -p admin
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
++ docker push ubuntu-bionic:8082/hello-world:v12
+The push refers to repository [ubuntu-bionic:8082/hello-world]
+f0ac3ce2c57d: Preparing
+fa053ea2b445: Preparing
+02f2bcb26af5: Preparing
+02f2bcb26af5: Layer already exists
+fa053ea2b445: Layer already exists
+f0ac3ce2c57d: Layer already exists
+v12: digest: sha256:5351b59b4a58586c0fc350ff0e545eb3319aeba35f8fc1a1226bd02746af468c size: 950
++ docker logout
+Removing login credentials for https://index.docker.io/v1/
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS```
 
 `При необходимости прикрепитe сюда скриншоты
 ![Название скриншота 2](ссылка на скриншот 2)`
