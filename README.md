@@ -127,7 +127,7 @@ Finished: SUCCESS
 ---
 
 ### Задание 2
-Настройка pipllene
+Настройка pipllene:
 <img src = "img/jk2.png" width = 100%>
 
 Результат выполнения сборки:
@@ -245,14 +245,15 @@ Removing login credentials for https://index.docker.io/v1/
 [Pipeline] }
 [Pipeline] // node
 [Pipeline] End of Pipeline
-Finished: SUCCESS```
+Finished: SUCCESS
+```
 
 <img src = "img/nx1.png" width = 100%>
 
 ---
 
 ### Задание 3
-Настройка pipllene
+Настройка pipllene:
 <img src = "img/jk3.png" width = 100%>
 
 Результат выполнения сборки:
